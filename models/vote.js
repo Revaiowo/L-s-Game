@@ -21,4 +21,4 @@ const voteSchema = new mongoose.Schema({
 
 }); 
 
-export const Vote =  Base.discriminator('votes', voteSchema);
+export const Vote =  Base.discriminator('vote', voteSchema);

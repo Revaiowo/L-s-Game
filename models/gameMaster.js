@@ -16,6 +16,7 @@ const gameMasterSchema = new mongoose.Schema({
     phase: {
         type: String,
         required: true,
+        default: 'join'
     },
 
     remark: {
@@ -25,7 +26,7 @@ const gameMasterSchema = new mongoose.Schema({
     },
 
     LDies: {
-        type: String,
+        type: Boolean,
         reqired: true,
         default: false
     },
@@ -45,6 +46,7 @@ const gameMasterSchema = new mongoose.Schema({
     gameRound: {
         type: Number,
         required: true,
+        default: 1
     },
 
     troubleshoot: {
@@ -54,4 +56,4 @@ const gameMasterSchema = new mongoose.Schema({
     }
 }); 
 
-export const GameMaster =  Base.discriminator('players', gameMasterSchema);
+export const GameMaster =  Base.discriminator('gameMaster', gameMasterSchema);

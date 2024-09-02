@@ -17,10 +17,12 @@ export const handleError = async (interaction, error) => {
                 embeds: [new EmbedBuilder().setDescription('That user is not banned.')]
             }); 
 
-        else
+        else {
+            return interaction.followUp('Something went wrong.');
             await interaction.followUp({ 
                     embeds: [ new EmbedBuilder().setDescription(`Something went wrong: ${error.message}`) ]
                 });
+        }
 
     } else {
         await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });

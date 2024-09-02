@@ -3,12 +3,12 @@ import { Base } from './base.js';
 
 const playerSchema = new mongoose.Schema({
 
-    userId: {
+    playerId: {
         type: Number,
         required: true,
     },
 
-    userName: {
+    playerName: {
         type: String,
         required: true
     },
@@ -18,7 +18,20 @@ const playerSchema = new mongoose.Schema({
         required: true
     },
 
+    role: {
+        type: String,
+        required: true,
+    },
 
+    item: {
+        type: String,
+        required: true,
+    },
+
+    canUseItem: {
+        type: Boolean,
+        required: true,
+    },
 }); 
 
-export const Player =  Base.discriminator('players', playerSchema);
+export const Player =  Base.discriminator('player', playerSchema);

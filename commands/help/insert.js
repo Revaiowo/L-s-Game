@@ -32,6 +32,7 @@ export default {
                 playerId: id,
                 playerName: member.user.username,
                 gameName,
+                isAlive: true,
                 role: 'none',
                 item: 'none',
                 canUseItem: true,

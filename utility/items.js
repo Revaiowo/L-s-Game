@@ -1,5 +1,3 @@
-import { Player } from "../models/player.js";
-
 
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -8,7 +6,7 @@ function shuffleArray(array) {
   }
 }
 
-export const giveItems = async (playersInfo) => {
+export const giveItems = (playersInfo) => {
 
     const items = ['Spy Camera', 'Bat', 'Vote Canceler', 'Vote Doubler', 'Revival Stone', 'Spyware'];
     const killingItems = ['Knife', 'Toxin', 'Gun'];
@@ -19,18 +17,24 @@ export const giveItems = async (playersInfo) => {
     const invItems = [];
     const kwItems = [];
 
-    for (const [i, item] of items.entries()) {
+    // -2 because we don't need to give items to L and Kira
+    for (let i=0; i < playersInfo.length - 2; i++) {
 
         if (i % 2 === 0)
-            invItems.push(item);
+            invItems.push(items[i]);
         else 
-            kwItems.push(item);
+            kwItems.push(items[i]);       
     };
 
-    invItems.splice(0, 0, killingItems[0]); 
+    invItems.splice(0, 0, killingItems[0]); // add a killing item to inv items
+    invItems.pop(); // we added 1 item in front so gotta take one out from the back
     killingItems.splice(0, 1);
 
+    invItems.splice(0, 0, 'Mythical Chocolate'); // add MC to inv items
+    invItems.pop();
+
     kwItems.splice(0, 0, killingItems[0]);
+    kwItems.pop();
     killingItems.splice(0, 1);
 
     shuffleArray(invItems);
@@ -38,24 +42,28 @@ export const giveItems = async (playersInfo) => {
 
     for (const player of playersInfo) {
 
-        if (player.role === 'Kira')
-            await Player.findOneAndUpdate({ playerId: player.playerId }, { $set: { item: 'Death Note' } });
+        if (player.role === 'Kira') {
+            player.item = 'Death Note';
+        }
 
-        else if (player.role === 'L')
-            await Player.findOneAndUpdate({ playerId: player.playerId }, { $set: { item: '100IQ' } });
+        else if (player.role === 'L') {
+            player.item = '100IQ';
+        }
 
         else if (player.role === 'Investigator') {
-            await Player.findOneAndUpdate({ playerId: player.playerId }, { $set: { item: invItems[0] } });
+
+            player.item = invItems[0];
             invItems.splice(0, 1); // remove the item just selected aka the first position
         }
 
         else if (player.role === 'Kira Worshipper') {
-            await Player.findOneAndUpdate({ playerId: player.playerId }, { $set: { item: kwItems[0] } });
+            player.item = kwItems[0];
             kwItems.splice(0, 1);
         }
 
         else if (player.role === 'Neutral') {
-            await Player.findOneAndUpdate({ playerId: player.playerId }, { $set: { item: killingItems[0] } });
+            player.item = killingItems[0];
         }
     };
+
 };

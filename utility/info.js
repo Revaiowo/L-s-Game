@@ -37,26 +37,58 @@ export const  distributeInfo = async (playersInfo) => {
     const kiraObj = await Player.findOne({ role: 'Kira' });
     const kiraName = kiraObj.gameName;
 
-    console.log(invNames);
-    console.log(kwNames);
-    console.log(LName);
-    console.log(kiraName);
+    // console.log(invNames);
+    // console.log(kwNames);
+    // console.log(LName);
+    // console.log(kiraName);
 
     invNames.push(LName, kiraName);
     kwNames.push(LName, kiraName);
 
-    const finalInfo = [{}];
+    const finalInvInfo = [{}];
+    const finalKwInfo = [{}];
+
+    // console.log(playersInfo);
 
     for (const player of playersInfo) {
 
         if (player.role === 'Investigator') {
 
-            finalInfo.push({ name: player.gameName });
+            let info;
+            if (player.item === 'Mythical Chocolate') {
+                info = template1(LName, 'L');
+            }
+            else {
+                console.log(invNames)
+                invNames.splice(player.gameName, 1);
+                console.log(invNames)
+
+                info = template2(invNames[0], kwNames[0], 'Investigator');
+                invNames.splice(0, 1);
+                console.log(invNames);
+
+                kwNames.splice(0, 1);
+    
+                invNames.splice(player.gameName, 0);
+                console.log(invNames);
+                return
+            }
+
+            finalInvInfo.push({ name: player.gameName, info });
         }
 
         else if (player.role === 'Kira Worshipper') {
 
+            // const info = template2(invNames[0], kwNames[0], 'Kira Worshipper');
+            // invNames.splice(0, 1);
+            // kwNames.splice(0, 1);
+
+            // finalKwInfo.push({ name: player.gameName, info });
         }
     }
+
+
+
+    console.log(finalInvInfo);
  
 };

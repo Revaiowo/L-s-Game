@@ -18,6 +18,11 @@ const playerSchema = new mongoose.Schema({
         required: true
     },
 
+    isAlive: {
+        type: Boolean,
+        required: true
+    },
+
     role: {
         type: String,
         required: true,

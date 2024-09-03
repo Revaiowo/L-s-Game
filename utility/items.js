@@ -1,7 +1,5 @@
 import { Player } from "../models/player.js";
 
-const items = ['Spy Camera', 'Bat', 'Vote Canceler', 'Vote Doubler', 'Revival Stone', 'Spyware'];
-const killingItems = ['Knife', 'Toxin', 'Gun'];
 
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -11,6 +9,9 @@ function shuffleArray(array) {
 }
 
 export const giveItems = async (playersInfo) => {
+
+    const items = ['Spy Camera', 'Bat', 'Vote Canceler', 'Vote Doubler', 'Revival Stone', 'Spyware'];
+    const killingItems = ['Knife', 'Toxin', 'Gun'];
 
     shuffleArray(items);
     shuffleArray(killingItems);
@@ -31,6 +32,9 @@ export const giveItems = async (playersInfo) => {
 
     kwItems.splice(0, 0, killingItems[0]);
     killingItems.splice(0, 1);
+
+    shuffleArray(invItems);
+    shuffleArray(kwItems);
 
     for (const player of playersInfo) {
 

@@ -32,6 +32,7 @@ export default {
             playerId: interaction.user.id,
             playerName: interaction.user.username,
             gameName,
+            isAlive: true,
             role: 'none',
             item: 'none',
             canUseItem: true,

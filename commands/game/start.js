@@ -3,6 +3,7 @@ import { GameMaster } from "../../models/gameMaster.js";
 import { Player } from "../../models/player.js";
 import { getRoles } from "../../utility/roles.js";
 import { giveItems } from "../../utility/items.js";
+import { giveInfo } from "../../utility/info.js";
 
 
 export default {
@@ -60,12 +61,12 @@ export default {
             playerName: player.playerName
         }));
 
-        await channel.send('Player list-');
+        // await channel.send('Player list-');
 
-        for (const [i, player] of playersInfo.entries()){
+        // for (const [i, player] of playersInfo.entries()){
 
-            await channel.send(`${i+1}.) ${player.gameName}`);
-        };
+        //     await channel.send(`${i+1}.) ${player.gameName}`);
+        // };
 
         await channel.send('Disributing roles.....');
 
@@ -79,6 +80,9 @@ export default {
             player.role = roles[i];
         }
 
+        // distributes items to players
         giveItems(playersInfo);
+
+        giveInfo(playersInfo);
     }
 }

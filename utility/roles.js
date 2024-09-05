@@ -1,6 +1,6 @@
 
 
-const roleNames = ['L','Kira'];
+export const roleNames = ['L','Kira'];
 
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {

@@ -73,16 +73,25 @@ export default {
         // ------------------------- ROLE & ITEM DISTRIBUTION -----------------------
 
         const roles = getRoles(playersInfo);
-
+        
         for (const [i, player] of playersInfo.entries()){
-
+            
             await Player.findOneAndUpdate({ playerId: player.playerId }, { $set: { role: roles[i] } });
             player.role = roles[i];
         }
-
-        // distributes items to players
+        
+        // inserts every player's items in the object of playerInfo array
         giveItems(playersInfo);
 
+<<<<<<< HEAD
         // distributeInfo(playersInfo);
+=======
+        for (const player of playersInfo){
+            
+            await Player.findOneAndUpdate({ playerId: player.playerId }, { $set: { item: player.item } });
+        }       
+
+        distributeInfo(playersInfo);
+>>>>>>> 7b3161cb8f3af25ef0ca1c150d58c7dfa28d2804
     }
 }

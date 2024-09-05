@@ -4,7 +4,7 @@ import { Base } from './base.js';
 const playerSchema = new mongoose.Schema({
 
     playerId: {
-        type: Number,
+        type: String,
         required: true,
     },
 

@@ -23,6 +23,13 @@ export default {
 
         const player = await Player.findOne({ playerId: interaction.user.id });
 
+<<<<<<< HEAD
+=======
+        const { item, canUseItem } = player;
+
+        const killingItems = ["Knife", "Toxin", "Gun"];
+        const alivePlayers = await Player.find({ isAlive: true });
+>>>>>>> 7b3161cb8f3af25ef0ca1c150d58c7dfa28d2804
 
         if (!gameMaster) {
             return interaction.editReply(`There is no game going on.`);
@@ -32,6 +39,7 @@ export default {
             return interaction.editReply(`You are not in the game.`);
         }
 
+<<<<<<< HEAD
 
         const { item, canUseItem } = player;
 
@@ -39,10 +47,13 @@ export default {
         const alivePlayers = await Player.find({ isAlive: true, playerId: { $ne: interaction.user.id } });
 
         
+=======
+>>>>>>> 7b3161cb8f3af25ef0ca1c150d58c7dfa28d2804
         if (!canUseItem) {
             return interaction.editReply(`You can't use ${item}.`);
         }
 
+<<<<<<< HEAD
 
 
         if (killingItems.includes(item)) {
@@ -51,6 +62,14 @@ export default {
                 return interaction.editReply(`You can't use this item in ${gameMaster.phase} phase`);
             }
 
+=======
+        if (gameMaster.phase === "join" || gameMaster.phase === 'vote') {
+            return interaction.editReply(`You can't use this item in ${gameMaster.phase} phase`);
+        }
+
+        if (killingItems.includes(item)) {
+
+>>>>>>> 7b3161cb8f3af25ef0ca1c150d58c7dfa28d2804
             const embed = new EmbedBuilder()
                 .setColor("#FF0000")
                 .setTitle(`The ${item} of Justice`)
@@ -60,7 +79,11 @@ export default {
 
             const selectOptions = alivePlayers.map(player => ({
                 label: player.gameName,
+<<<<<<< HEAD
                 value: player.playerId.toString()
+=======
+                value: player.playerId
+>>>>>>> 7b3161cb8f3af25ef0ca1c150d58c7dfa28d2804
             }));
 
             const selectMenu = new StringSelectMenuBuilder()
@@ -75,7 +98,11 @@ export default {
 
             const menuRow = new ActionRowBuilder().addComponents(selectMenu);
             const buttonRow = new ActionRowBuilder().addComponents(cancelButton);
+<<<<<<< HEAD
             console.log(alivePlayers);
+=======
+
+>>>>>>> 7b3161cb8f3af25ef0ca1c150d58c7dfa28d2804
             const collector = interaction.channel.createMessageComponentCollector({
                 time: 30000,
             });
@@ -92,19 +119,31 @@ export default {
                     collector.stop();
 
                     const targetPlayerId = i.values[0];
+<<<<<<< HEAD
                     
                     // const targetPlayerToDm = await i.guild.members.fetch(targetPlayerId); // use this to send the user a dm telling him he died
                     // console.log(`Successfully fetched member: ${targetPlayerToDm.user.tag}`);
+=======
+                    const targetPlayerToDm = await interaction.guild.members.fetch(targetPlayerId); // use this to send the user a dm telling him he died
+>>>>>>> 7b3161cb8f3af25ef0ca1c150d58c7dfa28d2804
 
                     const targetPlayer = await Player.findOne({ playerId: targetPlayerId });
 
                     await Player.updateOne(
+<<<<<<< HEAD
                         { playerId: targetPlayerId },
+=======
+                        { playerId: targetPlayerId},  
+>>>>>>> 7b3161cb8f3af25ef0ca1c150d58c7dfa28d2804
                         { $set: { isAlive: false } }
                     );
 
                     await Player.updateOne(
+<<<<<<< HEAD
                         { playerId: player.playerId },
+=======
+                        { playerId: player.playerId},
+>>>>>>> 7b3161cb8f3af25ef0ca1c150d58c7dfa28d2804
                         { $set: { canUseItem: false } }
                     );
 
@@ -113,7 +152,11 @@ export default {
                         .setTitle(`I hope using the ${item} was worth it`)
                         .setDescription(`The player ${targetPlayer.gameName} has been killed.`);
 
+<<<<<<< HEAD
                     await i.followUp({ embeds: [embed] });
+=======
+                    await i.followUp({ embeds: [embed] }); 
+>>>>>>> 7b3161cb8f3af25ef0ca1c150d58c7dfa28d2804
                     await interaction.editReply({ components: [menuRow, buttonRow] });
 
                 } else if (i.customId === "cancel") {
@@ -122,7 +165,11 @@ export default {
 
                     collector.stop();
 
+<<<<<<< HEAD
                     await i.followUp({ content: "You have cancelled the item use.", components: [menuRow, buttonRow] });
+=======
+                    await i.followUp({content: "You have cancelled the item use.", components: [menuRow, buttonRow] });
+>>>>>>> 7b3161cb8f3af25ef0ca1c150d58c7dfa28d2804
                 }
             });
 

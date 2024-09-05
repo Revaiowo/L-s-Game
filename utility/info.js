@@ -26,37 +26,82 @@ function template3(x, y, z) {
 export const  distributeInfo = async (playersInfo) => {
 
     const invArray = await Player.find({ role: 'Investigator' });
-    const invNames = invArray.map(inv => (inv.gameName));
+    const invNames = invArray.map(inv => ({ gameName: inv.gameName, item: inv.item }));
 
+    const noInvArray = await Player.find({ role: { $ne: 'Investigator' } });
+    const noInvNames = noInvArray.map(inv => (inv.gameName));
+    
     const kwArray = await Player.find({ role: 'Kira Worshipper' });
     const kwNames = kwArray.map(kw => (kw.gameName));
 
+    const noKwArray = await Player.find({ role: { $ne: 'Kira Worshipper' } });
+    const noKwNames = noKwArray.map(kw => (kw.gameName));
+    
     const LObj = await Player.findOne({ role: 'L' });
     const LName = LObj.gameName;
 
     const kiraObj = await Player.findOne({ role: 'Kira' });
     const kiraName = kiraObj.gameName;
 
-    console.log(invNames);
-    console.log(kwNames);
-    console.log(LName);
-    console.log(kiraName);
+    const finalInvInfo = [];
+    const finalKwInfo = [];
 
-    invNames.push(LName, kiraName);
-    kwNames.push(LName, kiraName);
+    console.log('inv - ', invNames);
+    console.log('kw - ', kwNames);
+    console.log('L - ', LName);
+    console.log('Kira - ', kiraName);
 
-    const finalInfo = [{}];
+    for (let i=0; i < invNames.length; i++) {
 
-    for (const player of playersInfo) {
+        let info, near;
 
-        if (player.role === 'Investigator') {
-
-            finalInfo.push({ name: player.gameName });
+        if (invNames[i].item === 'Mythical Chocolate') {
+            near = invNames[i].gameName;
+            info = template1(LName, 'L');
         }
 
-        else if (player.role === 'Kira Worshipper') {
-
+        else if (near) {
+            info = template2(near, noInvNames[0], 'Investigator');   
+            noInvNames.splice(0, 1);
+            near = null;
         }
+        
+        else if (i === invNames.length - 1) 
+            info = template3(noInvNames[0], noInvNames[1],'Investigator');
+
+        else {
+            info = template2(invNames[i+1].gameName, noInvNames[0], 'Investigator');   
+            noInvNames.splice(0, 1);
+        }
+
+        finalInvInfo.push({ name: invNames[i].gameName, info });
     }
+
+    let flag = true;
+
+    for (const kw of kwNames) {
+
+        let info;
+
+        if (flag) {
+            info = template1(kiraName, 'Kira');
+            flag = false;
+        }
+
+        else if (kwNames.length === 2) 
+                info = template3(noKwNames[0], noKwNames[1],'Kira Worshipper');
+        
+        else {
+            kwNames.splice(kwNames.indexOf(kw), 1);
+            info = template2(kwNames[0], noKwNames[0], 'Kira Worshipper');   
+            kwNames.push(kw);
+            kwNames.splice(0, 1);
+            noKwNames.splice(0, 1);
+        }
+        finalKwInfo.push({ name: kw , info });
+    }
+
+    console.log(finalInvInfo);
+    console.log(finalKwInfo);
  
 };

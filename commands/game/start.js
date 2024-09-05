@@ -3,7 +3,7 @@ import { GameMaster } from "../../models/gameMaster.js";
 import { Player } from "../../models/player.js";
 import { getRoles } from "../../utility/roles.js";
 import { giveItems } from "../../utility/items.js";
-import { distributeInfo } from "../../utility/info.js";
+// import { distributeInfo } from "../../utility/info.js";
 
 
 export default {
@@ -83,11 +83,15 @@ export default {
         // inserts every player's items in the object of playerInfo array
         giveItems(playersInfo);
 
+<<<<<<< HEAD
+        // distributeInfo(playersInfo);
+=======
         for (const player of playersInfo){
             
             await Player.findOneAndUpdate({ playerId: player.playerId }, { $set: { item: player.item } });
         }       
 
         distributeInfo(playersInfo);
+>>>>>>> 7b3161cb8f3af25ef0ca1c150d58c7dfa28d2804
     }
 }

@@ -38,6 +38,8 @@ export default {
     
             const index = Math.floor(Math.random() * animeNames.length);
             const [gameName] = animeNames.splice(index, 1);
+
+            console.log(ids[i]);
             
             await Player.create({
                 playerId: ids[i],

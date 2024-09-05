@@ -9,7 +9,7 @@ const gameMasterSchema = new mongoose.Schema({
     },
 
     channelId: {
-        type: Number,
+        type: String,
         required: true
     },
 

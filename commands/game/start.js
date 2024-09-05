@@ -3,7 +3,7 @@ import { GameMaster } from "../../models/gameMaster.js";
 import { Player } from "../../models/player.js";
 import { getRoles } from "../../utility/roles.js";
 import { giveItems } from "../../utility/items.js";
-import { distributeInfo } from "../../utility/info.js";
+// import { distributeInfo } from "../../utility/info.js";
 
 
 export default {
@@ -83,6 +83,6 @@ export default {
         // distributes items to players
         giveItems(playersInfo);
 
-        distributeInfo(playersInfo);
+        // distributeInfo(playersInfo);
     }
 }

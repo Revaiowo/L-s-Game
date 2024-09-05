@@ -22,7 +22,11 @@ const __dirname = path.dirname(__filename); // Normal use of __dirname is not al
 client.login(TOKEN)
     .then(() => {
         loadEvents(client, __dirname);
+        console.log("Events loaded");
         loadCommands(client, __dirname);
+        console.log("Commands loaded");
         connectDB(MONGO_URI);
+
+        console.log('Bot is online!');
     })
     .catch(error => console.log(error));

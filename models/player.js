@@ -33,6 +33,11 @@ const playerSchema = new mongoose.Schema({
         required: true,
     },
 
+    info: {
+        type: String,
+        required: true,
+    },
+
     canUseItem: {
         type: Boolean,
         required: true,

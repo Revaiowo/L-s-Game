@@ -94,16 +94,6 @@ export default {
                         value: player.playerId
                     }));
 
-                const selectMenu = new StringSelectMenuBuilder()
-                    .setCustomId("target")
-                    .setPlaceholder("Smack grandpa")
-                    .addOptions(selectOptions);
-
-                const cancelButton = new ButtonBuilder()
-                    .setCustomId("cancel")
-                    .setLabel("Cancel")
-                    .setStyle(ButtonStyle.Danger);
-
                 const menuRow = createDropdownMenu("target", "Smack grandpa", selectOptions);
                 const buttonRow = createCancelButton()
                 const collector = interaction.channel.createMessageComponentCollector({

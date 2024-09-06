@@ -6,7 +6,7 @@ function shuffleArray(array) {
   }
 }
 
-export const giveItems = (playersInfo) => {
+export const getItems = (playersInfo) => {
 
     const items = ['Spy Camera', 'Bat', 'Vote Canceler', 'Vote Doubler', 'Revival Stone', 'Spyware'];
     const killingItems = ['Knife', 'Toxin', 'Gun'];

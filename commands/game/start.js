@@ -1,9 +1,9 @@
 import { SlashCommandBuilder, EmbedBuilder  } from "discord.js";
 import { GameMaster } from "../../models/gameMaster.js";
 import { Player } from "../../models/player.js";
-import { getRoles } from "../../utility/roles.js";
-import { giveItems } from "../../utility/items.js";
-// import { distributeInfo } from "../../utility/info.js";
+import { getRoles } from "../../utility/distribute/roles.js";
+import { getItems } from "../../utility/distribute/items.js";
+import { getInfo } from "../../utility/distribute/info.js";
 
 
 export default {
@@ -81,13 +81,14 @@ export default {
         }
         
         // inserts every player's items in the object of playerInfo array
-        giveItems(playersInfo);
+        getItems(playersInfo);
 
-        for (const player of playersInfo){
-            
+        for (const player of playersInfo)
             await Player.findOneAndUpdate({ playerId: player.playerId }, { $set: { item: player.item } });
-        }       
 
-        // distributeInfo(playersInfo);
+        const finalInfo = getInfo(playersInfo);
+
+        for (const player of finalInfo) 
+            await Player.findOneAndUpdate({ gameName: player.gameName }, { $set: { info: player.info } });
     }
 }

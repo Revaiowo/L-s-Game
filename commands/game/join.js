@@ -35,6 +35,7 @@ export default {
             isAlive: true,
             role: 'none',
             item: 'none',
+            info: 'none',
             canUseItem: true,
         })
 

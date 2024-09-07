@@ -39,8 +39,6 @@ export default {
             const index = Math.floor(Math.random() * animeNames.length);
             const [gameName] = animeNames.splice(index, 1);
 
-            console.log(ids[i]);
-            
             await Player.create({
                 playerId: ids[i],
                 playerName: member.user.username,
@@ -48,6 +46,7 @@ export default {
                 isAlive: true,
                 role: 'none',
                 item: 'none',
+                info: 'none',
                 canUseItem: true,
             });
 

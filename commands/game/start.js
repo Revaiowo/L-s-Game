@@ -1,9 +1,10 @@
-import { SlashCommandBuilder, EmbedBuilder  } from "discord.js";
+import { SlashCommandBuilder, EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder  } from "discord.js";
 import { GameMaster } from "../../models/gameMaster.js";
 import { Player } from "../../models/player.js";
 import { getRoles } from "../../utility/distribute/roles.js";
 import { getItems } from "../../utility/distribute/items.js";
 import { getInfo } from "../../utility/distribute/info.js";
+import { startRemarkPhase } from "../../utility/phase/remark.js";
 
 
 export default {
@@ -41,7 +42,7 @@ export default {
                 gameRound: false,
             });
 
-        if (gameMaster.game) return await channel.send('A game is already going on.')
+        // if (gameMaster?.game) return await channel.send('A game is already going on.')
         
         await channel.send("Join L's Game using the /join command.");
 
@@ -90,5 +91,8 @@ export default {
 
         for (const player of finalInfo) 
             await Player.findOneAndUpdate({ gameName: player.gameName }, { $set: { info: player.info } });
+
+        startRemarkPhase(playersInfo, channel);
+        
     }
 }

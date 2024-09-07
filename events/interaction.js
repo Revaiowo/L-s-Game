@@ -1,6 +1,7 @@
-import { Events } from 'discord.js';
+import { ActionRowBuilder, ButtonBuilder, Events } from 'discord.js';
 import { Collection } from 'discord.js';
 import { handleError } from '../handlers/errorHandler.js';
+// import { remarkButton } from '../buttons/remark.js';
 
 export default {
 
@@ -46,18 +47,35 @@ export default {
 			}
 		}	
 
-		else if (interaction.isButton() || interaction.isStringSelectMenu()) {
+		else if (interaction.isButton()) {
 
-			const command = interaction.client.commands.find(cmd => cmd.customIds && cmd.customIds.includes(interaction.customId));
+			const button = interaction.client.buttons.get(interaction.customId);
 
-			if (command && command.handleInteraction) {
-				try {
-					await command.handleInteraction(interaction);
-				} catch (error) {
-					console.error(error);
-					await interaction.reply({ content: 'There was an error while handling this interaction!', ephemeral: true });
-				}
+			if (!button)
+				return console.error(`No button matching ${interaction.customId} was found.`);
+
+			try {
+				await button.execute(interaction);
+				
+				// Disable the button after it's clicked
+                const originalButton = ButtonBuilder.from(interaction.component);
+                const disabledButton = ButtonBuilder.from(originalButton).setDisabled(true);
+
+                const row = new ActionRowBuilder().addComponents(disabledButton);
+
+                if (!interaction.replied && !interaction.deferred) {
+                    await interaction.update({ components: [row] });
+                } else {
+                    await interaction.message.edit({ components: [row] });
+                }
+
+			} catch (error) {
+				console.error(error);
 			}
+
+			// if (interaction.customId === 'remark') {
+			// 	await remarkButton(interaction);
+			// }
 		}
 	},
 };
